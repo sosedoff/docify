@@ -1,0 +1,69 @@
+#!/usr/bin/env ruby
+
+lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
+$LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
+
+require 'rubygems'
+require 'optparse'
+require 'docify'
+
+# ------------------------------------------------------------------------------
+# Default options
+# ------------------------------------------------------------------------------
+
+options = {
+  :format  => nil,   # Render format
+  :output  => nil,   # Output filename
+  :use_css => true   # Embedded CSS support
+}
+
+# ------------------------------------------------------------------------------
+# Setup OptParser
+# ------------------------------------------------------------------------------
+
+optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: docify [options] FILE"
+  opts.on('-l', '--list', 'List of all formats') do
+    puts "Formats:"
+    Docify::FORMATS.each { |f| puts "- #{f}" }
+    exit
+  end
+  opts.on('-f', '--format FORMAT', 'Render as format') do |f|
+    unless Docify.valid_format?(f)
+      puts "Invalid format!" ; exit
+    end
+    options[:format] = f
+  end
+  opts.on('--no-css', 'Disable css styling') { options[:use_css] = false }
+  opts.on('-o', '--output=PATH', 'Output file path') do |path|
+    options[:output] = path
+  end
+  opts.on('-h', '--help', "Show this information") { puts opts.to_s ; exit }
+end
+
+# ------------------------------------------------------------------------------
+# Execute
+# ------------------------------------------------------------------------------
+
+begin
+  optparse.parse!
+  file = ARGV.shift.to_s.strip
+  unless file.empty?
+    begin
+      options[:format] = Docify.detect_format(file)
+      doc = Docify::Document.new(file)
+      doc.render(options[:format], options[:use_css])
+      if options[:output].nil?
+        puts doc.content
+      else
+        doc.save_to(options[:output])
+      end
+    rescue ArgumentError => e
+      puts "Error: #{e.message}"
+      exit
+    end
+  else
+    puts optparse.to_s
+    exit
+  end
+end
