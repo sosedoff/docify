@@ -66,4 +66,7 @@ begin
     puts optparse.to_s
     exit
   end
+rescue
+  puts optparse.to_s
+  exit
 end
