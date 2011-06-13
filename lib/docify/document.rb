@@ -14,7 +14,7 @@ module Docify
     # Render document by specified format
     def render(format, embed_css=true)
       raise ArgumentError, 'Invalid format!' unless FORMATS.include?(format)
-      result = GitHub::Markup.render("doc.#{format}", File.read(@path))
+      result = Docify::Markup.render("doc.#{format}", File.read(@path))
       if embed_css
         params = {:title => File.basename(@path), :content => result}
         params[:css] = Docify::CSS if embed_css

@@ -1,25 +1,29 @@
-require 'lib/docify/version'
+require File.expand_path('../lib/docify/version', __FILE__)
 
-Gem::Specification.new do |gem|
-  gem.name    = 'docify'
-  gem.version = Docify::VERSION
-  gem.date    = Time.now.strftime('%Y-%m-%d')
-
-  gem.add_dependency 'github-markup', '>= 0.5.3'
-  gem.add_dependency 'rdiscount',     '>= 1.6.8'
-  gem.add_dependency 'RedCloth',      '>= 4.2.3'
-
-  gem.summary = "Docify - Render documentation with favorite markup into html."
-  gem.description = "Docify provides a command line tool to render documentation files (RDoc, Markdown, Textile) into nice-looking html."
-
-  gem.authors  = ['Dan Sosedoff']
-  gem.email    = 'dan.sosedoff@gmail.com'
-  gem.homepage = 'http://github.com/sosedoff/docify'
-
-  gem.rubyforge_project = nil
-  gem.has_rdoc = false
+Gem::Specification.new do |s|
+  s.name        = "docify"
+  s.version     = Docify::VERSION.dup
+  s.summary     = "Terminal tool to render markups into html"
+  s.description = "Docify provides a command line tool to render documentation files (RDoc, Markdown, Textile) into nice-looking html."
+  s.homepage    = "http://github.com/sosedoff/docify"
+  s.authors     = ["Dan Sosedoff"]
+  s.email       = ["dan.sosedoff@gmail.com"]
   
-  gem.executables = ['docify']
-  gem.default_executable = 'docify'
-  gem.files = Dir['Rakefile', '{bin,lib}/**/*', 'README*']
+  s.add_development_dependency 'rake', '~> 0.8'
+  s.add_development_dependency 'rspec', '~> 2.5'
+  s.add_development_dependency 'ZenTest', '~> 4.5'
+  s.add_development_dependency 'simplecov', '~> 0.4'
+  s.add_development_dependency 'yard', '~> 0.6'
+  
+  s.add_runtime_dependency 'rdiscount', '~> 1.6.8'
+  s.add_runtime_dependency 'RedCloth', '~> 4.2.3'
+  
+  s.files = `git ls-files`.split("\n")
+  s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.executables = `git ls-files -- bin/*`.split("\n").map{|f| File.basename(f)}
+  s.require_paths = ["lib"]
+  s.default_executable = 'docify'
+  
+  s.platform = Gem::Platform::RUBY
+  s.required_rubygems_version = Gem::Requirement.new('>= 1.3.6') if s.respond_to? :required_rubygems_version=
 end

@@ -1,5 +1,5 @@
 module Docify
-REGEX = /(\{\{([a-z\-\_]{1,})\}\})/i
+  REGEX = /(\{\{([a-z\-\_]{1,})\}\})/i
   
   TEMPLATE = <<END_TEMPLATE
 <html>
