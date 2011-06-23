@@ -49,6 +49,8 @@ begin
   optparse.parse!
   file = ARGV.shift.to_s.strip
   unless file.empty?
+    file = File.expand_path(file)
+    
     begin
       options[:format] = Docify.detect_format(file)
       doc = Docify::Document.new(file)
@@ -59,6 +61,9 @@ begin
         doc.save_to(options[:output])
       end
     rescue ArgumentError => e
+      puts "Error: #{e.message}"
+      exit
+    rescue Exception => e
       puts "Error: #{e.message}"
       exit
     end

@@ -1,9 +1,12 @@
-if RUBY_VERSION.include?('1.9')
+if RUBY_VERSION >= '1.9'
   require 'rdoc/markup/to_html'
 else
   require 'rdoc/generators/html_generator'
   require 'ostruct'
 end
+
+require 'RedCloth'
+require 'rdiscount'
 
 module Docify
   module Markup
@@ -17,15 +20,11 @@ module Docify
       format == :text ? content : self.send(format, content)
     end
     
-    # Render content for Markdown
-    def markdown(content)
-      Markdown.new(content).to_html
-    end
-    
-    if RUBY_VERSION.include?('1.9')
-      # Render content for RDoc
+    if RUBY_VERSION >= '1.9'
+      # Render content for RDoc on Ruby 1.9
       def rdoc(content)
-        RDoc::Markup::ToHtml.new.convert(content)
+        markup = RDoc::Markup::ToHtml.new
+        markup.convert(content)
       end
     else
       # Render content for RDoc
@@ -36,6 +35,11 @@ module Docify
         simple_markup.add_special(/(((\{.*?\})|\b\S+?)\[\S+?\.\S+?\])/, :TIDYLINK)
         simple_markup.convert(content, generator)     
       end
+    end
+    
+    # Render content for Markdown
+    def markdown(content)
+      Markdown.new(content).to_html
     end
     
     # Render content for Textile

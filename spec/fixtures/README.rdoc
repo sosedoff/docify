@@ -1,0 +1,9 @@
+link:RDoc.html
+
+http://rdoc.rubyforge.org
+
+mailto:user@example.com
+
+{RDoc Documentation}[http://rdoc.rubyforge.org]
+
+{RDoc Markup}[link:RDoc/Markup.html]
