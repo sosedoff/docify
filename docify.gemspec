@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   
   s.add_runtime_dependency 'rdiscount', '~> 1.6.8'
   s.add_runtime_dependency 'RedCloth', '~> 4.2.3'
-  s.add_runtime_dependency 'rdoc', '~> 3.5'
+  s.add_runtime_dependency 'rdoc', '~> 3.7'
   
   s.files = `git ls-files`.split("\n")
   s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")

@@ -7,11 +7,7 @@ describe 'Template' do
   end
   
   it 'should render a valid content' do
-    
-    Docify::Template.new("{{a}}{{b}}").render(:a => 'a', :b => 'b')
-      .should == 'ab'
-      
-    Docify::Template.new("{{a}}{{b}}").render('a' => 'a', 'b' => 'b')
-      .should == 'ab'
+    Docify::Template.new("{{a}}{{b}}").render(:a => 'a', :b => 'b').should == 'ab'
+    Docify::Template.new("{{a}}{{b}}").render('a' => 'a', 'b' => 'b').should == 'ab'
   end
 end
