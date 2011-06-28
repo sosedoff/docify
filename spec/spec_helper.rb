@@ -17,8 +17,10 @@ README_FILES  = {
   'README.foo'      => 'rdoc'
 }
 
-def fixture_path
-  File.expand_path("../fixtures", __FILE__)
+def fixture_path(file=nil)
+  path = File.expand_path("../fixtures", __FILE__)
+  path = File.join(path, file) unless file.nil?
+  path
 end
 
 def fixture(file)
