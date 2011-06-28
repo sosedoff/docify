@@ -1,4 +1,4 @@
-module Docify 
+module Docify
   class Document
     attr_reader :path
     attr_reader :content
@@ -18,6 +18,7 @@ module Docify
       if embed_css
         params = {:title => File.basename(@path), :content => result}
         params[:css] = Docify::CSS if embed_css
+        params[:version] = Docify::VERSION
         @content = template(params)
       else
         @content = result
@@ -40,7 +41,7 @@ module Docify
     
     # Render template with provided data
     def template(params={})
-      TEMPLATE.gsub(REGEX) do |m|
+      TEMPLATE_REGEX.gsub(REGEX) do |m|
         m = params[m.scan(REGEX).flatten.last.to_sym]
       end
     end
