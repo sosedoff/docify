@@ -19,7 +19,7 @@ module Docify
         params = {:title => File.basename(@path), :content => result}
         params[:css] = Docify::CSS if embed_css
         params[:version] = Docify::VERSION
-        @content = template(params)
+        @content = Docify::Template.new(Docify::TEMPLATE).render(params)
       else
         @content = result
       end
@@ -35,15 +35,6 @@ module Docify
         raise ArgumentError, "Output path should be a file!"
       end
       File.open(path, 'w') { |f| f.write(@content) }
-    end
-    
-    private
-    
-    # Render template with provided data
-    def template(params={})
-      TEMPLATE_REGEX.gsub(REGEX) do |m|
-        m = params[m.scan(REGEX).flatten.last.to_sym]
-      end
     end
   end
 end

@@ -1,4 +1,6 @@
+require 'docify/utils'
 require 'docify/format'
+require 'docify/template'
 require 'docify/style'
 require 'docify/markup'
 require 'docify/document'
