@@ -18,7 +18,6 @@ module Docify
       if embed_css
         params = {:title => File.basename(@path), :content => result}
         params[:css] = Docify::CSS if embed_css
-        params[:version] = Docify::VERSION
         @content = Docify::Template.new(Docify::TEMPLATE).render(params)
       else
         @content = result

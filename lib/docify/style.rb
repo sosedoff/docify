@@ -9,7 +9,6 @@ module Docify
   </head>
   <body>
     <div id="content">{{content}}</div>
-    <!-- Generated with Docify v{{version}} -->
   </body>
 </html>
 END_TEMPLATE
