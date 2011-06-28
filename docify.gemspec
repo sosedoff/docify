@@ -24,7 +24,4 @@ Gem::Specification.new do |s|
   s.executables = `git ls-files -- bin/*`.split("\n").map{|f| File.basename(f)}
   s.require_paths = ["lib"]
   s.default_executable = 'docify'
-  
-  s.platform = Gem::Platform::RUBY
-  s.required_rubygems_version = Gem::Requirement.new('>= 1.3.6') if s.respond_to? :required_rubygems_version=
 end
