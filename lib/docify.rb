@@ -7,7 +7,7 @@ require 'docify/document'
 
 module Docify
   # Simply renders content for the markup
-  def self.render(text, format='mardown')
+  def self.render(text, format='markdown')
     if Docify::FORMATS.include?(format.to_s)
       Docify::Markup.send(format.to_sym, text)
     else
