@@ -1,10 +1,4 @@
-if RUBY_VERSION >= '1.9'
-  require 'rdoc/markup/to_html'
-else
-  require 'rdoc/generators/html_generator'
-  require 'ostruct'
-end
-
+require 'rdoc/rdoc'
 require 'RedCloth'
 require 'rdiscount'
 
