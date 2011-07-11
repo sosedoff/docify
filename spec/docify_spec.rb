@@ -11,4 +11,14 @@ describe 'Docify' do
       Docify.detect_format(k).should == v
     end
   end
+  
+  it 'should render markup directly' do
+    {
+      'README.markdown' => 'markdown',
+      'README.rdoc'     => 'rdoc',
+      'README.textile'  => 'textile'
+    }.each_pair do |k,v|
+      Docify.render(fixture(k), v).should == fixture(k + ".html")
+    end
+  end
 end
