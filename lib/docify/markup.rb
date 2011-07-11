@@ -1,4 +1,4 @@
-require 'rdoc/rdoc'
+require 'rdoc/markup/to_html'
 require 'RedCloth'
 require 'rdiscount'
 
@@ -14,21 +14,10 @@ module Docify
       format == :text ? content : self.send(format, content)
     end
     
-    if RUBY_VERSION >= '1.9'
-      # Render content for RDoc on Ruby 1.9
-      def rdoc(content)
-        markup = RDoc::Markup::ToHtml.new
-        markup.convert(content)
-      end
-    else
-      # Render content for RDoc
-      def rdoc(content)
-        simple_markup = SM::SimpleMarkup.new
-        generator = Generators::HyperlinkHtml.new('', OpenStruct.new)
-        simple_markup.add_special(/((link:|https?:|mailto:|ftp:|www\.)\S+\w)/, :HYPERLINK)
-        simple_markup.add_special(/(((\{.*?\})|\b\S+?)\[\S+?\.\S+?\])/, :TIDYLINK)
-        simple_markup.convert(content, generator)     
-      end
+    # Render content for RDoc
+    def rdoc(content)
+      markup = RDoc::Markup::ToHtml.new
+      markup.convert(content)
     end
     
     # Render content for Markdown
