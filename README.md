@@ -31,6 +31,12 @@ Produced result looks similar to GitHub's README and other doc files.
 
     # Inline usage (no styles)
     Docify.render('content', 'markdown')
+    
+Docify is tested on the following rubies:
+
+  - Ruby 1.8.7
+  - Ruby EE
+  - Ruby 1.9.2
   
 ## Terminal usage
   
