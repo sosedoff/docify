@@ -8,13 +8,9 @@ end
 require 'docify'
 
 README_FILES  = {
-  'README'          => 'rdoc',
-  'README.rdoc'     => 'rdoc',
-  'README.md'       => 'markdown',
-  'README.markdown' => 'markdown',
-  'README.textile'  => 'textile',
-  'README.txt'      => 'rdoc',
-  'README.foo'      => 'rdoc'
+  'README.rdoc'     => :rdoc,
+  'README.markdown' => :markdown,
+  'README.textile'  => :textile
 }
 
 def fixture_path(file=nil)

@@ -34,7 +34,7 @@ Produced result looks similar to GitHub's README and other doc files.
   
 ## Terminal usage
   
-  Usage: docify [options] FILE
+    Usage: docify [options] FILE
       -l, --list                       List of all formats
       -f, --format FORMAT              Render as format
           --no-css                     Disable css styling

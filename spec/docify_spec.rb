@@ -1,24 +1,36 @@
 require 'spec_helper'
 
 describe 'Docify' do
-  it 'should validate format' do
-    Docify::FORMATS.each { |f| Docify.valid_format?(f).should == true }
-    Docify.valid_format?('txt').should == false
-  end
-  
-  it 'should detect valid format' do
-    README_FILES.each do |k,v|
-      Docify.detect_format(k).should == v
-    end
+  it 'should create a document via shorthand' do
+    Docify.new(fixture_path('README.markdown')).should be_a Docify::Document
   end
   
   it 'should render markup directly' do
-    {
-      'README.markdown' => 'markdown',
-      'README.rdoc'     => 'rdoc',
-      'README.textile'  => 'textile'
-    }.each_pair do |k,v|
+    files = {
+      'README.markdown' => :markdown,
+      'README.rdoc'     => :rdoc,
+      'README.textile'  => :textile
+    }
+    
+    files.each_pair do |k,v|
       Docify.render(fixture(k), v).should == fixture(k + ".html")
+      Docify.render(fixture(k), v.to_s).should == fixture(k + ".html")
+      Docify.send(v, fixture(k)).should == fixture(k + ".html")
     end
+  end
+  
+  it 'should raise invalid markup error' do
+    proc { Docify.render(fixture('README.markdown'), :foobar) }.
+      should raise_exception ArgumentError, "Invalid markup: foobar."
+  end
+end
+
+describe 'Hash' do
+  it 'should strinfigy keys' do
+    {:a => 'a', :b => 'b'}.stringify_keys.should == {'a' => 'a', 'b' => 'b'}
+    
+    hash = {:a => 'a', :b => 'b'}
+    hash.stringify_keys!
+    hash.should == {'a' => 'a', 'b' => 'b'}
   end
 end

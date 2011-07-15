@@ -1,23 +1,22 @@
 module Docify
-  # All supported formats
-  FORMATS = ['rdoc', 'markdown', 'textile']
+  FORMATS = [:markdown, :textile, :rdoc]
   
-  # Aliases for file extensions
-  ALIASES = {
-    '.rdoc'     => 'rdoc',
-    '.textile'  => 'textile',
-    '.markdown' => 'markdown',
-    '.md'       => 'markdown'
-  }
-  
-  # Returns true if provided format is supported
-  def self.valid_format?(f)
-    FORMATS.include?(f)
-  end
-  
-  # Automatically detect format from extension
-  def self.detect_format(file)
-    ext = File.extname(file).downcase
-    ALIASES.key?(ext) ? ALIASES[ext] : FORMATS.first
+  module Format
+    # Detects if specified format is supported
+    def valid_format?(f)
+      FORMATS.include?(f.to_sym)
+    end
+    
+    # Detects markup format from filename
+    def detect_format(filename)
+      case(filename)
+        when /\.rdoc/i
+          :rdoc
+        when /\.(md|mkdn?|mdown|markdown)/i
+          :markdown
+        when /\.textile/i
+          :textile
+      end
+    end
   end
 end
