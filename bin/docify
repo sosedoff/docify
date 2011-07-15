@@ -11,9 +11,10 @@ require 'optparse'
 # ------------------------------------------------------------------------------
 
 options = {
-  :format  => nil,   # Render format
-  :output  => nil,   # Output filename
-  :use_css => true   # Embedded CSS support
+  :format  => nil,
+  :output  => nil,
+  :html    => true,
+  :css     => true
 }
 
 # ------------------------------------------------------------------------------
@@ -23,21 +24,23 @@ options = {
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: docify [options] FILE"
   opts.on('-l', '--list', 'List of all formats') do
-    puts "Formats:"
-    Docify::FORMATS.each { |f| puts "- #{f}" }
+    $stdout.puts("Formats:")
+    Docify::FORMATS.each { |f| $stdout.puts("- #{f}") }
     exit
   end
   opts.on('-f', '--format FORMAT', 'Render as format') do |f|
     unless Docify.valid_format?(f)
-      puts "Invalid format!" ; exit
+      $stderr.puts("Invalid format: #{f}")
+      exit
     end
     options[:format] = f
   end
-  opts.on('--no-css', 'Disable css styling') { options[:use_css] = false }
+  opts.on('--no-html', 'Disable HTML') { options[:html] = false }
+  opts.on('--no-css', 'Disable css styling') { options[:css] = false }
   opts.on('-o', '--output=PATH', 'Output file path') do |path|
     options[:output] = path
   end
-  opts.on('-h', '--help', "Show this information") { puts opts.to_s ; exit }
+  opts.on('-h', '--help', "Show this information") { $stdout.puts(opts.to_s) ; exit }
 end
 
 # ------------------------------------------------------------------------------
@@ -46,31 +49,27 @@ end
 
 begin
   optparse.parse!
+  
   file = ARGV.shift.to_s.strip
   unless file.empty?
     file = File.expand_path(file)
     
     begin
-      options[:format] = Docify.detect_format(file)
       doc = Docify::Document.new(file)
-      doc.render(options[:format], options[:use_css])
+      doc.render(options)
       if options[:output].nil?
-        puts doc.content
+        $stdout.puts(doc.content)
       else
         doc.save_to(options[:output])
       end
-    rescue ArgumentError => e
-      puts "Error: #{e.message}"
-      exit
     rescue Exception => e
-      puts "Error: #{e.message}"
-      exit
+      $stderr.puts("Error: #{e.message}")
     end
   else
-    puts optparse.to_s
-    exit
+    $stderr.puts("Error: file required.")
+    $stderr.puts(optparse.to_s)
   end
-rescue
-  puts optparse.to_s
-  exit
+rescue OptionParser::InvalidOption => e
+  $stderr.puts("Error: #{e.message}")
+  $stderr.puts(optparse.to_s)
 end

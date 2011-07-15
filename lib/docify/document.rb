@@ -24,20 +24,20 @@ module Docify
     #   :css => Include CSS styles (default: true)
     def render(options={})
       format = (options[:format] || detect_format(@path)).to_sym
-      use_html = (options[:html] || true) == true
-      use_css = (options[:css] || true) == true
+      use_html = options.key?(:html) ? options[:html] == true : true
+      use_css = options.key?(:css) ? options[:css] == true : true
       
       unless valid_format?(format)
         raise ArgumentError, "Invalid format: #{format}"
       end
       
       @content = Docify::Markup.send(format, File.read(@path))
-      if use_html
+      if use_html == true
         params = {
           :title   => File.basename(@path),
           :content => @content,
         }
-        params[:css] = Docify::CSS if use_css
+        params[:css] = Docify::CSS if use_css == true
         @content = Docify::Template.new(Docify::TEMPLATE).render(params)
       end
       @content

@@ -19,4 +19,8 @@ module Docify
       end
     end
   end
+
+  def self.valid_format?(f)
+    FORMATS.include?(f.to_sym)
+  end
 end
