@@ -20,7 +20,9 @@ module Docify
     end
   end
 
+  # Returns true if given format is supported
+  #
   def self.valid_format?(f)
-    FORMATS.include?(f.to_sym)
+    f.nil? ? false : FORMATS.include?(f.to_sym)
   end
 end

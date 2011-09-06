@@ -8,8 +8,10 @@ module Docify
     attr_reader :format
     
     # Initialize a new Document object with file path
-    #   @path   => Input file path
-    #   @format => Markup (default: markdown) 
+    #
+    # path   - Input file path
+    # format - Markup (default: markdown)
+    #
     def initialize(path, format=:markdown)
       raise ArgumentError, "File [#{path}] does not exist!" unless File.exists?(path)
       raise ArgumentError, "File required!" unless File.file?(path)
@@ -19,9 +21,13 @@ module Docify
     end
     
     # Render document content
-    #   :format => Set render format (auto-detection)
-    #   :html => Render into html (default: true)
-    #   :css => Include CSS styles (default: true)
+    #
+    # options - Render options
+    #
+    # options[:format] - Set render format (auto-detection)
+    # options[:html]   - Render with html (default: true)
+    # options[:css]    - Include CSS styles (default: true)
+    #
     def render(options={})
       format = (options[:format] || detect_format(@path)).to_sym
       use_html = options.key?(:html) ? options[:html] == true : true
@@ -44,7 +50,9 @@ module Docify
     end
     
     # Save rendered content into the file
-    #   @path => Output file path
+    #
+    # path - Output path
+    #
     def save_to(path)
       unless File.exists?(File.dirname(path))
         raise ArgumentError, "Output path does not exist!"

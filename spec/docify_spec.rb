@@ -23,6 +23,14 @@ describe 'Docify' do
     proc { Docify.render(fixture('README.markdown'), :foobar) }.
       should raise_exception ArgumentError, "Invalid markup: foobar."
   end
+  
+  it 'should render markup based on format detected from filename' do
+    data = Docify.render_auto(fixture('README.markdown'), 'README.markdown')
+    data.should == fixture('README.markdown.html')
+    
+    data = Docify.render_auto(fixture('README.markdown'), 'README.foo')
+    data.should == fixture('README.markdown')
+  end
 end
 
 describe 'Hash' do
