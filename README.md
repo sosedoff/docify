@@ -4,6 +4,8 @@ Docify allows you to render your markup files (Rdoc/Markup/Textile) into nice-lo
 
 Produced result looks similar to GitHub's README and other doc files.
 
+Available as a library and a binary. 
+
 ## Dependencies
 
 - rdoc
@@ -16,21 +18,30 @@ Produced result looks similar to GitHub's README and other doc files.
 
 ## Usage
 
-    require 'docify'
+```ruby
+require 'docify'
 
-    doc = Docify::Document.new('path/to/file.md')
+doc = Docify::Document.new('path/to/file.md')
 
-    # Renders text with markdown
-    doc.render('markdown')
+# Renders text with markdown
+doc.render('markdown')
 
-    # Renders text with markdown without css styling
-    doc.render('markdown', false)
+# Renders text with markdown without css styling
+doc.render('markdown', false)
 
-    # Save rendered content into the file
-    doc.save_to('/path/to/output.html')
+# Save rendered content into the file
+doc.save_to('/path/to/output.html')
+```
+    
+Or use simplified shortcut methods:
 
-    # Inline usage (no styles)
-    Docify.render('content', 'markdown')
+```ruby
+# Render for specified language 
+Docify.render('content', :markdown)
+
+# Render the content with autodetection from filename
+Docify.render_auto('content', 'README.md')
+```
     
 Docify is tested on the following rubies:
 
@@ -40,12 +51,15 @@ Docify is tested on the following rubies:
   
 ## Terminal usage
   
-    Usage: docify [options] FILE
-      -l, --list                       List of all formats
-      -f, --format FORMAT              Render as format
-          --no-css                     Disable css styling
-      -o, --output=PATH                Output file path
-      -h, --help                       Show this information
+```
+Usage: docify [options] FILE
+    -l, --list                       List of all formats
+    -f, --format FORMAT              Render as format
+        --no-html                    Disable HTML
+        --no-css                     Disable css styling
+    -o, --output=PATH                Output file path
+    -h, --help                       Show this information
+```
   
 By default docify will output result to terminal:
 
