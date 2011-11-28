@@ -1,4 +1,4 @@
-require 'rdoc/markup/to_html'
+require 'rdoc'
 require 'RedCloth'
 require 'rdiscount'
 
