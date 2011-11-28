@@ -15,8 +15,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'simplecov', '~> 0.4'
   s.add_development_dependency 'yard', '~> 0.6'
   
-  s.add_runtime_dependency 'rdiscount', '~> 1.6.8'
-  s.add_runtime_dependency 'RedCloth', '~> 4.2.3'
+  s.add_runtime_dependency 'rdiscount', '~> 1.6'
+  s.add_runtime_dependency 'RedCloth', '~> 4.2'
   s.add_runtime_dependency 'rdoc', '~> 3.7'
   
   s.files = `git ls-files`.split("\n")
