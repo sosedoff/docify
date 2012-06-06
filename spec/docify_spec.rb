@@ -33,7 +33,7 @@ describe 'Docify' do
   end
 
   it 'should render flavored markup' do
-    data = Docify.render_auto(fixture('flavored.md', 'flavored.md'))
+    data = Docify.render_auto(fixture('flavored.md'), 'flavored.md')
     data.include?('<pre class="code-lang1">').should be_true
     data.include?('<pre class="code-lang2">').should be_true
   end
