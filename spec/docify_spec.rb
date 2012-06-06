@@ -31,6 +31,12 @@ describe 'Docify' do
     data = Docify.render_auto(fixture('README.markdown'), 'README.foo')
     data.should == fixture('README.markdown')
   end
+
+  it 'should render flavored markup' do
+    data = Docify.render_auto(fixture('flavored.md', 'flavored.md'))
+    data.include?('<pre class="code-lang1">').should be_true
+    data.include?('<pre class="code-lang2">').should be_true
+  end
 end
 
 describe 'Hash' do
