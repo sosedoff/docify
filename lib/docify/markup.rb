@@ -32,5 +32,14 @@ module Docify
       end
       data
     end
+
+    private
+
+    def process_output(data)
+      regex = /(<h([1-6])>)(.*)(<\/h([1-6])>)+/
+      data.gsub(regex) do
+        "<h#{$2} id='#{$3.gsub(/[^a-z\d\-]+/i, '-').downcase}'>#{$3}</h#{$2}>"
+      end
+    end
   end
 end
